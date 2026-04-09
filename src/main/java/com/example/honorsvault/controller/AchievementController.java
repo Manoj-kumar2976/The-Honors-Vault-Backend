@@ -1,37 +1,52 @@
 package com.example.honorsvault.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import com.example.honorsvault.model.Achievement;
 import com.example.honorsvault.service.AchievementService;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/achievements")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class AchievementController {
 
     @Autowired
     private AchievementService service;
 
     @PostMapping
-    public Achievement add(@RequestBody Achievement a) {
-        return service.save(a);
+    public ResponseEntity<?> add(@RequestBody Achievement a) {
+        try {
+            return ResponseEntity.status(201).body(service.save(a));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     @GetMapping
-    public List<Achievement> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<Achievement>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/student/{email}")
-    public List<Achievement> getByStudent(@PathVariable String email) {
-        return service.getByEmail(email);
+    public ResponseEntity<List<Achievement>> getByStudent(@PathVariable String email) {
+        return ResponseEntity.ok(service.getByEmail(email));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Achievement updated) {
+        try {
+            return ResponseEntity.ok(service.update(id, updated));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

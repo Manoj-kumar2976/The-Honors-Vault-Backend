@@ -3,6 +3,7 @@ package com.example.honorsvault.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "achievements")
 public class Achievement {
 
     @Id
@@ -19,7 +20,6 @@ public class Achievement {
     @Column(length = 1000)
     private String description;
 
-    // ✅ GETTERS
     public Long getId() { return id; }
     public String getStudentName() { return studentName; }
     public String getStudentEmail() { return studentEmail; }
@@ -29,13 +29,12 @@ public class Achievement {
     public String getDate() { return date; }
     public String getDescription() { return description; }
 
-    // ✅ SETTERS
     public void setId(Long id) { this.id = id; }
-    public void setStudentName(String studentName) { this.studentName = studentName; }
-    public void setStudentEmail(String studentEmail) { this.studentEmail = studentEmail; }
-    public void setActivity(String activity) { this.activity = activity; }
-    public void setCategory(String category) { this.category = category; }
-    public void setLevel(String level) { this.level = level; }
-    public void setDate(String date) { this.date = date; }
-    public void setDescription(String description) { this.description = description; }
+    public void setStudentName(String n) { this.studentName = n; }
+    public void setStudentEmail(String e) { this.studentEmail = e != null ? e.trim().toLowerCase() : null; }
+    public void setActivity(String a) { this.activity = a; }
+    public void setCategory(String c) { this.category = c; }
+    public void setLevel(String l) { this.level = l; }
+    public void setDate(String d) { this.date = d; }
+    public void setDescription(String d) { this.description = d; }
 }

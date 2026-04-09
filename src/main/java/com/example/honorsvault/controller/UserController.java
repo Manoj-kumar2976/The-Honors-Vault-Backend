@@ -1,24 +1,22 @@
 package com.example.honorsvault.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.honorsvault.model.User;
-import com.example.honorsvault.repository.UserRepository;
-
+import com.example.honorsvault.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService service;
 
-    // ✅ GET ALL USERS
     @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<List<User>> getAll() {
+        return ResponseEntity.ok(service.getAllUsers());
     }
 }
