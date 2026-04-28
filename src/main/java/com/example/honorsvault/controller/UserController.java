@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://the-honors-vault-klu.vercel.app")
 public class UserController {
 
     @Autowired
