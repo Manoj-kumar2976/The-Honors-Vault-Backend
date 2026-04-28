@@ -5,6 +5,7 @@ import com.example.honorsvault.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Map;
 
 @RestController
@@ -21,7 +22,9 @@ public class AuthController {
             User saved = service.signup(user);
             return ResponseEntity.status(201).body(saved);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 
@@ -31,7 +34,9 @@ public class AuthController {
             User found = service.login(user.getEmail(), user.getPassword());
             return ResponseEntity.ok(found);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 }
